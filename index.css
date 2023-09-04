@@ -1,0 +1,115 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#board {
+    width: 600px;
+    height: 600px;
+    display: grid;
+    grid-template-columns: repeat(15,1fr);
+    gap: 0;
+    border: 1px solid rgb(55, 55, 55);
+}
+
+img {
+    width: 30px;
+    height: 30px;
+}
+
+.box {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(55, 55, 55);
+}
+
+.red-home {
+    border: none;
+    background-color: red;
+}
+
+.red-home-inner {
+    background-color: white;
+}
+.red-home-coin {
+    background-color: red;
+    border-radius: 50%;
+}
+.green-home {
+    border: none;
+    background-color: green;
+}
+
+.green-home-inner {
+    background-color: white;
+}
+.green-home-coin {
+    background-color: green;
+    border-radius: 50%;
+}
+.blue-home {
+    border: none;
+    background-color: blue;
+}
+
+.blue-home-inner {
+    background-color: white;
+}
+.blue-home-coin {
+    background-color: blue;
+    border-radius: 50%;
+}
+.yellow-home {
+    border: none;
+    background-color: yellow;
+}
+
+.yellow-home-inner {
+    background-color: white;
+}
+.yellow-home-coin {
+    background-color: yellow;
+    border-radius: 50%;
+}
+.transform-nw {
+    transform: translate(-50%,-50%);
+}
+.transform-ne {
+    transform: translate(-50%,50%);
+}
+.transform-sw {
+    transform: translate(50%,-50%);
+}
+.transform-se {
+    transform: translate(50%,50%);
+}
+
+.home {
+    background-color: aquamarine;
+}
+.blue-star, .blue-safe {
+    background-color: blue;
+}
+.red-star, .red-safe {
+    background-color: red;
+}
+.green-star, .green-safe {
+    background-color: green;
+}
+.yellow-star, .yellow-safe {
+    background-color: yellow;
+}
+/* .div .child > .child1 */
+
+/* img[src="value"] */
