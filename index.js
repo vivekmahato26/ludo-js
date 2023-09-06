@@ -185,8 +185,8 @@ for (let i = 0; i < 15; i++) {
     }
     div.innerText = i + "," + j;
     div.classList.add("box");
-    div.dataset.i = i;
-    div.dataset.j = j;
+    div.dataset.coords = i + "," + j;
+    div.dataset.code = "";
     board.append(div);
     allBoxes.push({
       i,
@@ -244,6 +244,8 @@ const movesArr = [
   validMovesArr[index147],
 ];
 
+const players = [];
+
 class Coin {
   constructor(code, color, currenti, currentj) {
     this.code = code;
@@ -251,17 +253,61 @@ class Coin {
     this.currenti = currenti;
     this.currentj = currentj;
     this.safe = false;
+    this.safePath = false;
   }
-  move = (diceOutput) => {
+  move = (diceOutput,player) => {
+    if(this.safePath) {
+      const currentIndex = player.safeArr.findIndex(
+        (e) => e.i == this.currenti && e.j == this.currentj
+      );
+      let newIndex = currentIndex + diceOutput;
+      if(newIndex > player.safeArr.length) {
+        // change turn
+        return;
+      }
+      if(newIndex < player.safeArr.length) {
+        this.currenti = player.safeArr[newIndex].i;
+        this.currentj = player.safeArr[newIndex].j;
+        return;
+      }
+      if(newIndex == player.safeArr.length) {
+        this.currenti = 100;
+        this.currentj = 100;
+        const tempPlayer = players.find(e => e.name == player.name);
+        const updatedCoins = tempPlayer.coins.filter(e => e.code !== this.code);
+        tempPlayer.coins = updatedCoins;
+        const updatedPlayersArr = players.map(e => {
+          if(e.name == this.name) {
+            return tempPlayer
+          }
+          return e;
+        })
+        players.length = 0;
+        updatedPlayersArr.forEach(e => players.push(e));
+        return;
+      }
+    }
     const currentIndex = movesArr.findIndex(
       (e) => e.i == this.currenti && e.j == this.currentj
     );
     let newIndex = currentIndex + diceOutput;
+    if(newIndex > player.safeStart) {
+      const tempIndex = newIndex - player.safeStart - 1;
+      this.currenti = player.safeArr[tempIndex].i;
+      this.currentj = player.safeArr[tempIndex].j;
+      this.safePath = true;
+      return;
+    }
     if (newIndex >= movesArr.length) newIndex = newIndex - movesArr.length - 1;
     const box = movesArr[newIndex];
     this.currenti = box.i;
     this.currentj = box.j;
   };
+
+  updateBoard = () => {
+    const position = document.querySelector(`[data-coodrs="${this.currenti},${this.currentj}"]`);
+    position.dataset.code += ","+this.code;
+  }
 }
 
 class Player {
@@ -277,7 +323,7 @@ class Player {
   }
 }
 
-const players = [];
+
 
 const blueSafeIndex = movesArr.findIndex((e) => e.i == 14 && e.j == 7);
 const blueSafeArr = validMovesArr
@@ -379,6 +425,12 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     break;
   }
   const color = prompt("select color");
+  const tempPlayer = players.find(e => e.color == color);
+  if(tempPlayer) {
+    i--;
+    alert("color already selected");
+    break;
+  }
   switch (color) {
     case "red": {
       players.push(redPlayer);
