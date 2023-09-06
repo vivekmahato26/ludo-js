@@ -326,19 +326,19 @@ class Player {
 
 
 const blueSafeIndex = movesArr.findIndex((e) => e.i == 14 && e.j == 7);
-const blueSafeArr = validMovesArr
+const blueSafeArr = allBoxes
   .filter((e) => e.type == "blue-safe")
   .sort((a, b) => a.i - b.i);
 const redSafeIndex = movesArr.findIndex((e) => e.i == 7 && e.j == 0);
-const redSafeArr = validMovesArr
+const redSafeArr = allBoxes
   .filter((e) => e.type == "red-safe")
   .sort((a, b) => a.j - b.j);
 const greenSafeIndex = movesArr.findIndex((e) => e.i == 0 && e.j == 7);
-const greenSafeArr = validMovesArr
+const greenSafeArr = allBoxes
   .filter((e) => e.type == "green-safe")
   .sort((a, b) => b.i - a.i);
 const yellowSafeIndex = movesArr.findIndex((e) => e.i == 7 && e.j == 14);
-const yellowSafeArr = validMovesArr
+const yellowSafeArr = allBoxes
   .filter((e) => e.type == "yellow-safe")
   .sort((a, b) => b.j - a.j);
 
@@ -429,7 +429,7 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
   if(tempPlayer) {
     i--;
     alert("color already selected");
-    break;
+    continue;
   }
   switch (color) {
     case "red": {
