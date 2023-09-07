@@ -1,11 +1,14 @@
 const board = document.getElementById("board");
 const dice = document.getElementById("dice-btn");
+let diceValue = null;
+
 const allBoxes = [];
 for (let i = 0; i < 15; i++) {
   for (let j = 0; j < 15; j++) {
     let type = "normal";
     let star = false;
     const div = document.createElement("div");
+    div.dataset.code = "";
     if (i >= 0 && i <= 5 && j >= 0 && j < 6) {
       div.classList.add("red-home");
       div.innerText = "";
@@ -17,43 +20,18 @@ for (let i = 0; i < 15; i++) {
     if (i == 2 && j == 2) {
       div.classList.add("red-home-coin");
       div.classList.add("transform-nw");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./red.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",r0"
-      
     }
     if (i == 3 && j == 2) {
       div.classList.add("red-home-coin");
       div.classList.add("transform-ne");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./red.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",r1"
     }
     if (i == 2 && j == 3) {
       div.classList.add("red-home-coin");
       div.classList.add("transform-sw");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./red.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",r2"
     }
     if (i == 3 && j == 3) {
       div.classList.add("red-home-coin");
       div.classList.add("transform-se");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./red.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",r3"
     }
     if (i >= 0 && i <= 5 && j >= 9 && j < 15) {
       div.classList.add("green-home");
@@ -66,42 +44,18 @@ for (let i = 0; i < 15; i++) {
     if (i == 2 && j == 11) {
       div.classList.add("green-home-coin");
       div.classList.add("transform-nw");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./green.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",g0"
     }
     if (i == 3 && j == 11) {
       div.classList.add("green-home-coin");
       div.classList.add("transform-ne");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./green.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",g1"
     }
     if (i == 2 && j == 12) {
       div.classList.add("green-home-coin");
       div.classList.add("transform-sw");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./green.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",g2"
     }
     if (i == 3 && j == 12) {
       div.classList.add("green-home-coin");
       div.classList.add("transform-se");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./green.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",g3"
     }
     if (i >= 9 && i <= 14 && j >= 0 && j < 6) {
       div.classList.add("blue-home");
@@ -114,42 +68,18 @@ for (let i = 0; i < 15; i++) {
     if (i == 11 && j == 2) {
       div.classList.add("blue-home-coin");
       div.classList.add("transform-nw");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./blue.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",b0"
     }
     if (i == 11 && j == 3) {
       div.classList.add("blue-home-coin");
       div.classList.add("transform-sw");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./blue.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",b1"
     }
     if (i == 12 && j == 2) {
       div.classList.add("blue-home-coin");
       div.classList.add("transform-ne");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./blue.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",b2"
     }
     if (i == 12 && j == 3) {
       div.classList.add("blue-home-coin");
       div.classList.add("transform-se");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./blue.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",b3"
     }
     if (i >= 9 && i <= 14 && j >= 9 && j < 15) {
       div.classList.add("yellow-home");
@@ -162,42 +92,18 @@ for (let i = 0; i < 15; i++) {
     if (i == 11 && j == 11) {
       div.classList.add("yellow-home-coin");
       div.classList.add("transform-nw");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./yellow.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",y0"
     }
     if (i == 12 && j == 11) {
       div.classList.add("yellow-home-coin");
       div.classList.add("transform-ne");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./yellow.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",y1"
     }
     if (i == 11 && j == 12) {
       div.classList.add("yellow-home-coin");
       div.classList.add("transform-sw");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./yellow.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",y2"
     }
     if (i == 12 && j == 12) {
       div.classList.add("yellow-home-coin");
       div.classList.add("transform-se");
-      const img = document.createElement("img");
-      img.setAttribute("src", "./yellow.png");
-      img.style.height = "30px";
-      img.style.width = "auto";
-      div.append(img);
-      div.dataset.code += ",y3"
     }
 
     if (i >= 6 && i <= 8 && j >= 6 && j < 9) {
@@ -207,10 +113,7 @@ for (let i = 0; i < 15; i++) {
     }
     if (i == 13 && j == 6) {
       div.classList.add("blue-star");
-      const img = document.createElement("img");
-      img.setAttribute("src", "star.svg");
-      div.innerText = "";
-      div.append(img);
+      div.classList.add("safe");
       star = true;
     }
     if (i >= 9 && i <= 13 && j == 7) {
@@ -219,10 +122,7 @@ for (let i = 0; i < 15; i++) {
     }
     if (i == 1 && j == 8) {
       div.classList.add("green-star");
-      const img = document.createElement("img");
-      img.setAttribute("src", "star.svg");
-      div.innerText = "";
-      div.append(img);
+      div.classList.add("safe");
       star = true;
     }
     if (i >= 1 && i <= 5 && j == 7) {
@@ -231,10 +131,7 @@ for (let i = 0; i < 15; i++) {
     }
     if (i == 6 && j == 1) {
       div.classList.add("red-star");
-      const img = document.createElement("img");
-      img.setAttribute("src", "star.svg");
-      div.innerText = "";
-      div.append(img);
+      div.classList.add("safe");
       star = true;
     }
     if (j >= 1 && j <= 5 && i == 7) {
@@ -243,10 +140,7 @@ for (let i = 0; i < 15; i++) {
     }
     if (i == 8 && j == 13) {
       div.classList.add("yellow-star");
-      const img = document.createElement("img");
-      img.setAttribute("src", "star.svg");
-      div.innerText = "";
-      div.append(img);
+      div.classList.add("safe");
       star = true;
     }
     if (j >= 9 && j <= 13 && i == 7) {
@@ -254,37 +148,24 @@ for (let i = 0; i < 15; i++) {
       type = "yellow-safe";
     }
     if (i == 8 && j == 2) {
-      const img = document.createElement("img");
-      img.setAttribute("src", "star.svg");
-      div.innerText = "";
-      div.append(img);
+      div.classList.add("safe");
       star = true;
     }
     if (i == 2 && j == 6) {
-      const img = document.createElement("img");
-      img.setAttribute("src", "star.svg");
-      div.innerText = "";
-      div.append(img);
+      div.classList.add("safe");
       star = true;
     }
     if (i == 6 && j == 12) {
-      const img = document.createElement("img");
-      img.setAttribute("src", "star.svg");
-      div.innerText = "";
-      div.append(img);
+      div.classList.add("safe");
       star = true;
     }
     if (i == 12 && j == 8) {
-      const img = document.createElement("img");
-      img.setAttribute("src", "star.svg");
-      div.innerText = "";
-      div.append(img);
+      div.classList.add("safe");
       star = true;
     }
     // div.innerText = i + "," + j;
     div.classList.add("box");
     div.dataset.coords = i + "," + j;
-    div.dataset.code = "";
     board.append(div);
     allBoxes.push({
       i,
@@ -292,6 +173,7 @@ for (let i = 0; i < 15; i++) {
       type,
       star,
     });
+    div.addEventListener("click", (e) => handleClick(e));
   }
 }
 
@@ -345,7 +227,7 @@ const movesArr = [
 const players = [];
 
 class Coin {
-  constructor(code, color, currenti, currentj) {
+  constructor(code, color, currenti, currentj, img) {
     this.code = code;
     this.color = color;
     this.currenti = currenti;
@@ -353,6 +235,7 @@ class Coin {
     this.safe = false;
     this.safePath = false;
     this.open = false;
+    this.img = img;
   }
   move = (diceOutput, player) => {
     if (!this.open) {
@@ -361,6 +244,8 @@ class Coin {
         const box = movesArr[player.startIndex];
         this.currenti = box.i;
         this.currentj = box.j;
+        displayCoins();
+        this.updateBoard();
         return;
       }
       return;
@@ -372,11 +257,14 @@ class Coin {
       let newIndex = currentIndex + diceOutput;
       if (newIndex > player.safeArr.length) {
         // change turn
+        Player.changeTurn();
         return;
       }
       if (newIndex < player.safeArr.length) {
         this.currenti = player.safeArr[newIndex].i;
         this.currentj = player.safeArr[newIndex].j;
+        displayCoins();
+        this.updateBoard();
         return;
       }
       if (newIndex == player.safeArr.length) {
@@ -395,29 +283,39 @@ class Coin {
         });
         players.length = 0;
         updatedPlayersArr.forEach((e) => players.push(e));
+        displayCoins();
+        this.updateBoard();
         return;
       }
     }
     let currentIndex = movesArr.findIndex(
       (e) => e.i == this.currenti && e.j == this.currentj
     );
-    let newIndex = currentIndex + diceOutput;
-    if (newIndex > player.safeStart) {
+    let newIndex = currentIndex + parseInt(diceOutput);
+    if (
+      newIndex > player.safeStart + 1 &&
+      player.safeStart + 1 > currentIndex
+    ) {
       const tempIndex = newIndex - player.safeStart - 1;
       this.currenti = player.safeArr[tempIndex].i;
       this.currentj = player.safeArr[tempIndex].j;
       this.safePath = true;
+      displayCoins();
+      this.updateBoard();
       return;
     }
     if (newIndex >= movesArr.length) newIndex = newIndex - movesArr.length - 1;
     const box = movesArr[newIndex];
+    console.log(box,movesArr,newIndex,currentIndex , diceOutput);
     this.currenti = box.i;
     this.currentj = box.j;
+    displayCoins();
+    this.updateBoard();
   };
 
   updateBoard = () => {
     const position = document.querySelector(
-      `[data-coodrs="${this.currenti},${this.currentj}"]`
+      `[data-coords="${this.currenti},${this.currentj}"]`
     );
     position.dataset.code += "," + this.code;
   };
@@ -440,11 +338,11 @@ class Player {
     const currentTurnIndex = players.findIndex((e) => e.turn);
     if (currentTurnIndex == players.length - 1) {
       players[0].turn = true;
-      players[currentTurnIndex] = false;
+      players[currentTurnIndex].turn = false;
       return;
     }
-    players[currentTurnIndex] = false;
-    players[currentTurnIndex + 1] = true;
+    players[currentTurnIndex].turn = false;
+    players[currentTurnIndex + 1].turn = true;
   };
 }
 
@@ -473,9 +371,10 @@ const playerNum = prompt("Select total players max 4");
 
 for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
   const coins = [];
-  for (let j = 0; j < 4; j++) {
-    coins.push(new Coin(`b${j}`, "blue", 0, 0));
-  }
+  coins.push(new Coin(`b0`, "blue", 11, 2, "./blue.png"));
+  coins.push(new Coin(`b1`, "blue", 11, 3, "./blue.png"));
+  coins.push(new Coin(`b2`, "blue", 12, 2, "./blue.png"));
+  coins.push(new Coin(`b3`, "blue", 12, 3, "./blue.png"));
   const bluePlayer = new Player(
     "blue",
     "bluePlayer",
@@ -486,9 +385,12 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     blueStartIndex
   );
   coins.length = 0;
-  for (let j = 0; j < 4; j++) {
-    coins.push(new Coin(`g${j}`, "green", 0, 0));
-  }
+  // for (let j = 0; j < 4; j++) {
+  coins.push(new Coin(`g0`, "green", 2, 11, "./green.png"));
+  coins.push(new Coin(`g1`, "green", 2, 12, "./green.png"));
+  coins.push(new Coin(`g2`, "green", 3, 11, "./green.png"));
+  coins.push(new Coin(`g3`, "green", 3, 12, "./green.png"));
+  // }
   const greenPlayer = new Player(
     "green",
     "greenPlayer",
@@ -499,9 +401,10 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     greenStartIndex
   );
   coins.length = 0;
-  for (let j = 0; j < 4; j++) {
-    coins.push(new Coin(`r${j}`, "red", 0, 0));
-  }
+  coins.push(new Coin(`r0`, "red", 2, 2, "./red.png"));
+  coins.push(new Coin(`r1`, "red", 2, 3, "./red.png"));
+  coins.push(new Coin(`r2`, "red", 3, 2, "./red.png"));
+  coins.push(new Coin(`r3`, "red", 3, 3, "./red.png"));
   const redPlayer = new Player(
     "red",
     "redPlayer",
@@ -512,9 +415,10 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     redStartIndex
   );
   coins.length = 0;
-  for (let j = 0; j < 4; j++) {
-    coins.push(new Coin(`y${j}`, "yellow", 0, 0));
-  }
+  coins.push(new Coin(`y0`, "yellow", 11, 11, "./yellow.png"));
+  coins.push(new Coin(`y1`, "yellow", 11, 12, "./yellow.png"));
+  coins.push(new Coin(`y2`, "yellow", 12, 11, "./yellow.png"));
+  coins.push(new Coin(`y3`, "yellow", 12, 12, "./yellow.png"));
   const yellowPlayer = new Player(
     "yellow",
     "yellowPlayer",
@@ -612,3 +516,77 @@ tempPlayers
   });
 
 players[0].turn = true;
+
+const handleClick = (event) => {
+  let targetDiv = event.target;
+  // console.log(event);
+  if (!board.dataset.dice) {
+    alert("Roll the dice first");
+    return;
+  }
+  const currentPlayerIndex = players.findIndex((e) => e.turn);
+  if (targetDiv.tagName == "IMG") targetDiv = targetDiv.parentElement;
+  // console.log(targetDiv);
+  const code = targetDiv.dataset.code;
+  // console.log(code);
+  if (code) {
+    temp = false;
+  } else {
+    alert("select a coin");
+    return;
+  }
+  const coinIndex = players[currentPlayerIndex].coins.findIndex((e) =>
+    code.includes(e.code)
+  );
+  console.log(coinIndex);
+  if(coinIndex  == -1 ) {
+    alert("select valid coin");
+    return;
+  }
+  if (players[currentPlayerIndex].coins[coinIndex].open) {
+    players[currentPlayerIndex].coins[coinIndex].move(board.dataset.dice,players[currentPlayerIndex]);
+    if (board.dataset.dice != 6) Player.changeTurn();
+  } else if (board.dataset.dice == 6) {
+    console.log(123);
+    players[currentPlayerIndex].coins[coinIndex].move(board.dataset.dice,players[currentPlayerIndex]);
+  } else {
+    const openCoins = players[currentPlayerIndex].coins.filter((e) => e.open);
+    if (openCoins.length) {
+      alert("select a valid Coin");
+      return;
+    } else {
+      Player.changeTurn();
+      return;
+    }
+  }
+};
+
+dice.addEventListener("click", (e) => {
+  const possibleValues = [1, 2, 3, 4, 5, 6];
+  const diceOutput = possibleValues[Math.floor(Math.random() * 6)];
+  board.dataset.dice = diceOutput;
+  console.log(diceOutput);
+  // if(parseInt(diceOutput) !== 6 )Player.changeTurn()
+  // dice.setAttribute("disabled",true)
+});
+
+const displayCoins = () => {
+  const boxes = document.querySelectorAll(`[data-code^=","]`);
+  boxes.forEach((e) => {
+    e.childNodes.forEach((e) => e.remove());
+    e.dataset.code = "";
+  });
+  const coins = players.map((e) => [...e.coins]).flat();
+  console.log(coins);
+  coins.forEach((e) => {
+    const box = document.querySelector(
+      `[data-coords^="${e.currenti},${e.currentj}"]`
+    );
+    const img = document.createElement("img");
+    img.setAttribute("src", e.img);
+    box.append(img);
+    box.dataset.code += "," + e.code;
+  });
+};
+
+displayCoins();
