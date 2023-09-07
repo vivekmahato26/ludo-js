@@ -1,4 +1,5 @@
 const board = document.getElementById("board");
+const dice = document.getElementById("dice-btn");
 const allBoxes = [];
 for (let i = 0; i < 15; i++) {
   for (let j = 0; j < 15; j++) {
@@ -16,18 +17,43 @@ for (let i = 0; i < 15; i++) {
     if (i == 2 && j == 2) {
       div.classList.add("red-home-coin");
       div.classList.add("transform-nw");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./red.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",r0"
+      
     }
     if (i == 3 && j == 2) {
       div.classList.add("red-home-coin");
       div.classList.add("transform-ne");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./red.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",r1"
     }
     if (i == 2 && j == 3) {
       div.classList.add("red-home-coin");
       div.classList.add("transform-sw");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./red.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",r2"
     }
     if (i == 3 && j == 3) {
       div.classList.add("red-home-coin");
       div.classList.add("transform-se");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./red.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",r3"
     }
     if (i >= 0 && i <= 5 && j >= 9 && j < 15) {
       div.classList.add("green-home");
@@ -40,18 +66,42 @@ for (let i = 0; i < 15; i++) {
     if (i == 2 && j == 11) {
       div.classList.add("green-home-coin");
       div.classList.add("transform-nw");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./green.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",g0"
     }
     if (i == 3 && j == 11) {
       div.classList.add("green-home-coin");
       div.classList.add("transform-ne");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./green.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",g1"
     }
     if (i == 2 && j == 12) {
       div.classList.add("green-home-coin");
       div.classList.add("transform-sw");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./green.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",g2"
     }
     if (i == 3 && j == 12) {
       div.classList.add("green-home-coin");
       div.classList.add("transform-se");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./green.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",g3"
     }
     if (i >= 9 && i <= 14 && j >= 0 && j < 6) {
       div.classList.add("blue-home");
@@ -64,18 +114,42 @@ for (let i = 0; i < 15; i++) {
     if (i == 11 && j == 2) {
       div.classList.add("blue-home-coin");
       div.classList.add("transform-nw");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./blue.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",b0"
     }
     if (i == 11 && j == 3) {
       div.classList.add("blue-home-coin");
       div.classList.add("transform-sw");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./blue.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",b1"
     }
     if (i == 12 && j == 2) {
       div.classList.add("blue-home-coin");
       div.classList.add("transform-ne");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./blue.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",b2"
     }
     if (i == 12 && j == 3) {
       div.classList.add("blue-home-coin");
       div.classList.add("transform-se");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./blue.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",b3"
     }
     if (i >= 9 && i <= 14 && j >= 9 && j < 15) {
       div.classList.add("yellow-home");
@@ -88,18 +162,42 @@ for (let i = 0; i < 15; i++) {
     if (i == 11 && j == 11) {
       div.classList.add("yellow-home-coin");
       div.classList.add("transform-nw");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./yellow.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",y0"
     }
     if (i == 12 && j == 11) {
       div.classList.add("yellow-home-coin");
       div.classList.add("transform-ne");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./yellow.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",y1"
     }
     if (i == 11 && j == 12) {
       div.classList.add("yellow-home-coin");
       div.classList.add("transform-sw");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./yellow.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",y2"
     }
     if (i == 12 && j == 12) {
       div.classList.add("yellow-home-coin");
       div.classList.add("transform-se");
+      const img = document.createElement("img");
+      img.setAttribute("src", "./yellow.png");
+      img.style.height = "30px";
+      img.style.width = "auto";
+      div.append(img);
+      div.dataset.code += ",y3"
     }
 
     if (i >= 6 && i <= 8 && j >= 6 && j < 9) {
@@ -183,7 +281,7 @@ for (let i = 0; i < 15; i++) {
       div.append(img);
       star = true;
     }
-    div.innerText = i + "," + j;
+    // div.innerText = i + "," + j;
     div.classList.add("box");
     div.dataset.coords = i + "," + j;
     div.dataset.code = "";
@@ -213,10 +311,10 @@ const lt = validMovesArr
   .sort((a, b) => a.j - b.j);
 const tl = validMovesArr
   .filter((e) => e.i >= 0 && e.i <= 5 && e.j == 6)
-  .sort((a, b) => a.i - b.i);
+  .sort((a, b) => b.i - a.i);
 const tr = validMovesArr
   .filter((e) => e.i >= 0 && e.i <= 5 && e.j == 8)
-  .sort((a, b) => b.i - a.i);
+  .sort((a, b) => a.i - b.i);
 const rt = validMovesArr
   .filter((e) => e.j >= 9 && e.j <= 14 && e.i == 6)
   .sort((a, b) => a.j - b.j);
@@ -254,44 +352,57 @@ class Coin {
     this.currentj = currentj;
     this.safe = false;
     this.safePath = false;
+    this.open = false;
   }
-  move = (diceOutput,player) => {
-    if(this.safePath) {
+  move = (diceOutput, player) => {
+    if (!this.open) {
+      if (diceOutput == 6) {
+        this.open = true;
+        const box = movesArr[player.startIndex];
+        this.currenti = box.i;
+        this.currentj = box.j;
+        return;
+      }
+      return;
+    }
+    if (this.safePath) {
       const currentIndex = player.safeArr.findIndex(
         (e) => e.i == this.currenti && e.j == this.currentj
       );
       let newIndex = currentIndex + diceOutput;
-      if(newIndex > player.safeArr.length) {
+      if (newIndex > player.safeArr.length) {
         // change turn
         return;
       }
-      if(newIndex < player.safeArr.length) {
+      if (newIndex < player.safeArr.length) {
         this.currenti = player.safeArr[newIndex].i;
         this.currentj = player.safeArr[newIndex].j;
         return;
       }
-      if(newIndex == player.safeArr.length) {
+      if (newIndex == player.safeArr.length) {
         this.currenti = 100;
         this.currentj = 100;
-        const tempPlayer = players.find(e => e.name == player.name);
-        const updatedCoins = tempPlayer.coins.filter(e => e.code !== this.code);
+        const tempPlayer = players.find((e) => e.name == player.name);
+        const updatedCoins = tempPlayer.coins.filter(
+          (e) => e.code !== this.code
+        );
         tempPlayer.coins = updatedCoins;
-        const updatedPlayersArr = players.map(e => {
-          if(e.name == this.name) {
-            return tempPlayer
+        const updatedPlayersArr = players.map((e) => {
+          if (e.name == this.name) {
+            return tempPlayer;
           }
           return e;
-        })
+        });
         players.length = 0;
-        updatedPlayersArr.forEach(e => players.push(e));
+        updatedPlayersArr.forEach((e) => players.push(e));
         return;
       }
     }
-    const currentIndex = movesArr.findIndex(
+    let currentIndex = movesArr.findIndex(
       (e) => e.i == this.currenti && e.j == this.currentj
     );
     let newIndex = currentIndex + diceOutput;
-    if(newIndex > player.safeStart) {
+    if (newIndex > player.safeStart) {
       const tempIndex = newIndex - player.safeStart - 1;
       this.currenti = player.safeArr[tempIndex].i;
       this.currentj = player.safeArr[tempIndex].j;
@@ -305,13 +416,15 @@ class Coin {
   };
 
   updateBoard = () => {
-    const position = document.querySelector(`[data-coodrs="${this.currenti},${this.currentj}"]`);
-    position.dataset.code += ","+this.code;
-  }
+    const position = document.querySelector(
+      `[data-coodrs="${this.currenti},${this.currentj}"]`
+    );
+    position.dataset.code += "," + this.code;
+  };
 }
 
 class Player {
-  constructor(color, name, coins, turn, safeStart, safeArr) {
+  constructor(color, name, coins, turn, safeStart, safeArr, startIndex) {
     this.color = color;
     this.name = name;
     this.locked = 4;
@@ -320,10 +433,20 @@ class Player {
     this.turn = turn;
     this.safeStart = safeStart;
     this.safeArr = safeArr;
+    this.startIndex = startIndex;
+    this.initialMove = false;
   }
+  static changeTurn = () => {
+    const currentTurnIndex = players.findIndex((e) => e.turn);
+    if (currentTurnIndex == players.length - 1) {
+      players[0].turn = true;
+      players[currentTurnIndex] = false;
+      return;
+    }
+    players[currentTurnIndex] = false;
+    players[currentTurnIndex + 1] = true;
+  };
 }
-
-
 
 const blueSafeIndex = movesArr.findIndex((e) => e.i == 14 && e.j == 7);
 const blueSafeArr = allBoxes
@@ -341,6 +464,10 @@ const yellowSafeIndex = movesArr.findIndex((e) => e.i == 7 && e.j == 14);
 const yellowSafeArr = allBoxes
   .filter((e) => e.type == "yellow-safe")
   .sort((a, b) => b.j - a.j);
+const blueStartIndex = movesArr.findIndex((e) => e.i == 13 && e.j == 6);
+const redStartIndex = movesArr.findIndex((e) => e.i == 6 && e.j == 1);
+const greenStartIndex = movesArr.findIndex((e) => e.i == 1 && e.j == 8);
+const yellowStartIndex = movesArr.findIndex((e) => e.i == 8 && e.j == 13);
 
 const playerNum = prompt("Select total players max 4");
 
@@ -355,7 +482,8 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     [...coins],
     true,
     blueSafeIndex,
-    blueSafeArr
+    blueSafeArr,
+    blueStartIndex
   );
   coins.length = 0;
   for (let j = 0; j < 4; j++) {
@@ -367,7 +495,8 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     [...coins],
     false,
     greenSafeIndex,
-    greenSafeArr
+    greenSafeArr,
+    greenStartIndex
   );
   coins.length = 0;
   for (let j = 0; j < 4; j++) {
@@ -379,7 +508,8 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     [...coins],
     false,
     redSafeIndex,
-    redSafeArr
+    redSafeArr,
+    redStartIndex
   );
   coins.length = 0;
   for (let j = 0; j < 4; j++) {
@@ -391,7 +521,8 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     [...coins],
     false,
     yellowSafeIndex,
-    yellowSafeArr
+    yellowSafeArr,
+    yellowStartIndex
   );
   coins.length = 0;
   if (parseInt(playerNum) == 2) {
@@ -419,14 +550,15 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
           players.push(redPlayer);
           temp = false;
           break;
-        default: alert("select a valid color")
+        default:
+          alert("select a valid color");
       }
     }
     break;
   }
   const color = prompt("select color");
-  const tempPlayer = players.find(e => e.color == color);
-  if(tempPlayer) {
+  const tempPlayer = players.find((e) => e.color == color);
+  if (tempPlayer) {
     i--;
     alert("color already selected");
     continue;
@@ -454,3 +586,29 @@ for (let i = 0; i < parseInt(playerNum) && i < 4; i++) {
     }
   }
 }
+
+const tempPlayers = players.map((e) => {
+  if (e.color == "blue") {
+    e.playOrder = 1;
+  }
+  if (e.color == "red") {
+    e.playOrder = 2;
+  }
+  if (e.color == "green") {
+    e.playOrder = 3;
+  }
+  if (e.color == "yellow") {
+    e.playOrder = 4;
+  }
+  return e;
+});
+
+players.length = 0;
+
+tempPlayers
+  .sort((a, b) => a.playOrder - b.playOrder)
+  .forEach((e) => {
+    players.push(e);
+  });
+
+players[0].turn = true;
