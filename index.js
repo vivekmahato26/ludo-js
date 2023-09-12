@@ -1,7 +1,7 @@
 const board = document.getElementById("board");
 const dice = document.getElementById("dice-btn");
 let diceValue = null;
-
+let ctr = 0;
 const allBoxes = [];
 for (let i = 0; i < 15; i++) {
   for (let j = 0; j < 15; j++) {
@@ -244,10 +244,13 @@ class Coin {
         const box = movesArr[player.startIndex];
         this.currenti = box.i;
         this.currentj = box.j;
-        displayCoins();
-        this.updateBoard();
+        // displayCoins(players);
+        moveCoin(this);
+        // this.updateBoard();
+        // Player.changeTurn();
         return;
       }
+      Player.changeTurn();
       return;
     }
     if (this.safePath) {
@@ -257,14 +260,16 @@ class Coin {
       let newIndex = currentIndex + diceOutput;
       if (newIndex > player.safeArr.length) {
         // change turn
+        ctr = 2;
         Player.changeTurn();
         return;
       }
       if (newIndex < player.safeArr.length) {
         this.currenti = player.safeArr[newIndex].i;
         this.currentj = player.safeArr[newIndex].j;
-        displayCoins();
-        this.updateBoard();
+        // displayCoins(players);
+        // this.updateBoard();
+        moveCoin(this);
         return;
       }
       if (newIndex == player.safeArr.length) {
@@ -283,8 +288,10 @@ class Coin {
         });
         players.length = 0;
         updatedPlayersArr.forEach((e) => players.push(e));
-        displayCoins();
-        this.updateBoard();
+        // displayCoins(updatedPlayersArr);
+        // this.updateBoard();
+        moveCoin(this);
+        // Player.changeTurn();
         return;
       }
     }
@@ -300,17 +307,21 @@ class Coin {
       this.currenti = player.safeArr[tempIndex].i;
       this.currentj = player.safeArr[tempIndex].j;
       this.safePath = true;
-      displayCoins();
-      this.updateBoard();
+      // displayCoins(players);
+      // this.updateBoard();
+      moveCoin(this);
+      // Player.changeTurn();
       return;
     }
     if (newIndex >= movesArr.length) newIndex = newIndex - movesArr.length - 1;
     const box = movesArr[newIndex];
-    console.log(box,movesArr,newIndex,currentIndex , diceOutput);
+    console.log(box, movesArr, newIndex, currentIndex, diceOutput);
     this.currenti = box.i;
     this.currentj = box.j;
-    displayCoins();
-    this.updateBoard();
+    // displayCoins(players);
+    // this.updateBoard();
+    moveCoin(this);
+    // Player.changeTurn();
   };
 
   updateBoard = () => {
@@ -335,14 +346,17 @@ class Player {
     this.initialMove = false;
   }
   static changeTurn = () => {
+    if (ctr < 2) return;
     const currentTurnIndex = players.findIndex((e) => e.turn);
     if (currentTurnIndex == players.length - 1) {
       players[0].turn = true;
       players[currentTurnIndex].turn = false;
+      board.dataset.dice = 0;
       return;
     }
     players[currentTurnIndex].turn = false;
     players[currentTurnIndex + 1].turn = true;
+    board.dataset.dice = 0;
   };
 }
 
@@ -518,6 +532,7 @@ tempPlayers
 players[0].turn = true;
 
 const handleClick = (event) => {
+  ctr++;
   let targetDiv = event.target;
   // console.log(event);
   if (!board.dataset.dice) {
@@ -539,22 +554,28 @@ const handleClick = (event) => {
     code.includes(e.code)
   );
   console.log(coinIndex);
-  if(coinIndex  == -1 ) {
+  if (coinIndex == -1) {
     alert("select valid coin");
     return;
   }
   if (players[currentPlayerIndex].coins[coinIndex].open) {
-    players[currentPlayerIndex].coins[coinIndex].move(board.dataset.dice,players[currentPlayerIndex]);
+    players[currentPlayerIndex].coins[coinIndex].move(
+      board.dataset.dice,
+      players[currentPlayerIndex]
+    );
     if (board.dataset.dice != 6) Player.changeTurn();
   } else if (board.dataset.dice == 6) {
-    console.log(123);
-    players[currentPlayerIndex].coins[coinIndex].move(board.dataset.dice,players[currentPlayerIndex]);
+    players[currentPlayerIndex].coins[coinIndex].move(
+      board.dataset.dice,
+      players[currentPlayerIndex]
+    );
   } else {
     const openCoins = players[currentPlayerIndex].coins.filter((e) => e.open);
     if (openCoins.length) {
       alert("select a valid Coin");
       return;
     } else {
+      ctr = 2;
       Player.changeTurn();
       return;
     }
@@ -562,31 +583,83 @@ const handleClick = (event) => {
 };
 
 dice.addEventListener("click", (e) => {
+  ctr++;
   const possibleValues = [1, 2, 3, 4, 5, 6];
   const diceOutput = possibleValues[Math.floor(Math.random() * 6)];
-  board.dataset.dice = diceOutput;
+  board.dataset.dice = 6;
   console.log(diceOutput);
   // if(parseInt(diceOutput) !== 6 )Player.changeTurn()
   // dice.setAttribute("disabled",true)
 });
 
-const displayCoins = () => {
-  const boxes = document.querySelectorAll(`[data-code^=","]`);
-  boxes.forEach((e) => {
-    e.childNodes.forEach((e) => e.remove());
-    e.dataset.code = "";
-  });
+const displayCoins = (players) => {
   const coins = players.map((e) => [...e.coins]).flat();
   console.log(coins);
   coins.forEach((e) => {
+    if (e.open) return;
     const box = document.querySelector(
       `[data-coords^="${e.currenti},${e.currentj}"]`
     );
+
     const img = document.createElement("img");
     img.setAttribute("src", e.img);
+    img.dataset.code = "coin-" + e.code;
+    img.dataset.initi = e.currenti;
+    img.dataset.initj = e.currentj;
     box.append(img);
     box.dataset.code += "," + e.code;
   });
 };
 
-displayCoins();
+displayCoins(players);
+
+const moveCoin = (coin) => {
+  const coinEle = document.querySelector(`[data-code="coin-${coin.code}"]`);
+  const parentBox = coinEle.parentElement;
+  const coinCodes = parentBox.dataset.code;
+  const codesArr = coinCodes.split(",");
+  const newCodesArr = codesArr.filter((e) => e !== coin.code);
+  parentBox.dataset.code = newCodesArr.join(",");
+  const { initi, initj } = coinEle.dataset;
+  coinEle.remove();
+  const box = document.querySelector(
+    `[data-coords^="${coin.currenti},${coin.currentj}"]`
+  );
+  const boxCode = box.dataset.code;
+  const boxArr = boxCode.split(",");
+  // const newboxArr = boxArr.filter((e) => e !== coin.code);
+  // parentBox.dataset.code = newboxArr.join(",");
+  if(boxArr.length == 2) {
+    if(coin.code[0] !== boxArr[1][0]) {
+      const {initi,initj,code} = box.firstChild.dataset;
+      box.firstChild.remove();
+      box.dataset.code = ",";
+      const tempPlayers = players.map(e => {
+        return {
+          ...e,
+          coins: e.coins.map(coin => {
+            if(coinCodes.code == code.split("-")[1]) {
+              return {
+                ...coin,
+                currenti: initi,
+                currentj: initj
+              }
+            }
+            return coin;
+          })
+        }
+      })
+      players.length = 0;
+      tempPlayers.forEach(e => players.push(e));
+    }
+  } 
+
+  const img = document.createElement("img");
+  img.setAttribute("src", coin.img);
+  img.dataset.code = "coin-" + coin.code;
+  img.dataset.initi = initi;
+  img.dataset.initj = initj;
+  box.append(img);
+  box.dataset.code += "," + coin.code;
+  if (board.dataset.dice != 6) Player.changeTurn();
+};
