@@ -313,7 +313,7 @@ class Coin {
       // Player.changeTurn();
       return;
     }
-    if (newIndex >= movesArr.length) newIndex = newIndex - movesArr.length - 1;
+    if (newIndex >= movesArr.length) newIndex = newIndex - movesArr.length;
     const box = movesArr[newIndex];
     console.log(box, movesArr, newIndex, currentIndex, diceOutput);
     this.currenti = box.i;
@@ -563,7 +563,7 @@ const handleClick = (event) => {
       board.dataset.dice,
       players[currentPlayerIndex]
     );
-    if (board.dataset.dice != 6) Player.changeTurn();
+    // if (board.dataset.dice != 6) Player.changeTurn();
   } else if (board.dataset.dice == 6) {
     players[currentPlayerIndex].coins[coinIndex].move(
       board.dataset.dice,
@@ -584,9 +584,13 @@ const handleClick = (event) => {
 
 dice.addEventListener("click", (e) => {
   ctr++;
-  const possibleValues = [1, 2, 3, 4, 5, 6];
-  const diceOutput = possibleValues[Math.floor(Math.random() * 6)];
-  board.dataset.dice = 6;
+  const possibleValues = [1, 2, 3, 4, 5, 6,6,6];
+  const diceOutput = possibleValues[Math.floor(Math.random() * possibleValues.length)];
+  board.dataset.dice = diceOutput;
+  const box = document.querySelector(
+    `[data-coords^="7,7"]`
+  );
+  box.innerHTML = diceOutput
   console.log(diceOutput);
   // if(parseInt(diceOutput) !== 6 )Player.changeTurn()
   // dice.setAttribute("disabled",true)
@@ -629,30 +633,41 @@ const moveCoin = (coin) => {
   const boxArr = boxCode.split(",");
   // const newboxArr = boxArr.filter((e) => e !== coin.code);
   // parentBox.dataset.code = newboxArr.join(",");
-  if(boxArr.length == 2) {
-    if(coin.code[0] !== boxArr[1][0]) {
-      const {initi,initj,code} = box.firstChild.dataset;
+  if (boxArr.length == 2 && !coin.star) {
+    if (coin.code[0] !== boxArr[1][0]) {
+      const { initi, initj, code } = box.firstChild.dataset;
       box.firstChild.remove();
       box.dataset.code = ",";
-      const tempPlayers = players.map(e => {
+      const tempPlayers = players.map((e) => {
         return {
           ...e,
-          coins: e.coins.map(coin => {
-            if(coinCodes.code == code.split("-")[1]) {
+          coins: e.coins.map((coin) => {
+            if (coinCodes.code == code.split("-")[1]) {
+              const b = document.querySelector(
+                `[data-coords^="${initi},${initj}"]`
+              );
+              const img = document.createElement("img");
+              img.setAttribute("src", coin.img);
+              img.dataset.code = "coin-" + coin.code;
+              img.dataset.initi = initi;
+              img.dataset.initj = initj;
+              b.append(img);
+              b.dataset.code = "," + coin.code;
               return {
                 ...coin,
                 currenti: initi,
-                currentj: initj
-              }
+                currentj: initj,
+                open: false
+              };
             }
             return coin;
-          })
-        }
-      })
+          }),
+        };
+      });
       players.length = 0;
-      tempPlayers.forEach(e => players.push(e));
+      tempPlayers.forEach((e) => players.push(e));
     }
-  } 
+  }
 
   const img = document.createElement("img");
   img.setAttribute("src", coin.img);
